@@ -1,0 +1,31 @@
+c语言解法一：暴力穷举
+int* twoSum(int* nums, int numsSize, int target) {  
+    int *a = (int*)malloc(2*sizeof(int));  
+    for(int i = 0;i<numsSize;i++)  
+    {  
+        for(int j = i+1;j<numsSize ;j++)  
+        {  
+            if(nums[i] + nums[j] == target)  
+            {  
+                a[0] = i;  
+                a[1] = j;  
+            }  
+        }  
+    }  
+    return a;  
+}  
+
+python解法:hash表
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        keys = {}
+        for i in range(len(nums)): [3,2,4] 6
+            if target - nums[i] in keys:
+                return [keys[target - nums[i]], i]
+            if nums[i] not in keys:
+                keys[nums[i]] = i
