@@ -1,0 +1,72 @@
+解法一C语言:
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    int carry_num = 0;
+    int sum = 0;
+    int frist =1;
+    struct ListNode *result = NULL;
+    struct ListNode *p = NULL;
+    struct ListNode *temp = NULL;
+    while(l1!=NULL || l2!=NULL || carry_num)
+    {
+        sum = ((l1!=NULL) ? l1->val : 0) + ((l2!=NULL) ? l2->val : 0) + carry_num;
+        carry_num = sum/10;
+        p =  malloc(sizeof(*p));
+        if (frist)
+        {
+            result = p;
+            temp = p;
+            result->val = sum%10;
+            result->next = NULL;
+            frist = 0;
+        }
+        else
+        {
+            temp->next = p;
+            temp = p;
+            temp->val = sum%10;
+            temp->next = NULL;
+        }
+        l1 = (l1!=NULL) ? l1->next: l1;
+        l2 = (l2!=NULL) ? l2->next: l2;
+    }
+    return result;
+}
+
+
+
+解法二：python
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if l1 is None:
+            return l2
+        if l2 is None:
+            return l1
+        carry = 0
+        frist_node = ListNode(0)
+        res = frist_node
+        while(l1 or l2 or carry):
+            sum = carry
+            if l1:
+                sum += l1.val
+                l1 = l1.next
+            if l2:
+                sum += l2.val
+                l2 = l2.next
+            carry = sum//10
+            res.next = ListNode(sum%10)
+            res = res.next
+        res = frist_node.next
+        del frist_node
+        return res
