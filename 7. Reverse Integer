@@ -1,0 +1,49 @@
+C语音：
+解法一：
+int reverse(int x) {
+    int negative = 0;
+    int result =0;
+    if(x<0){
+        negative =1;
+        x = -x;
+    }
+    while(x)
+    {
+        if (result>(INT_MAX-x%10)/10) {
+            return 0;
+        }
+        result = result*10+x%10;
+        x = x/10;
+    }
+    if(negative)
+        return -result;
+    return result;
+}
+
+解法二：用long形态保存，最后再判断
+int reverse(int x) {
+    long int res = 0;
+    while(x){
+        res = res * 10 + x % 10;
+        x /= 10;    
+    }
+     if((res > INT_MAX) || (res < INT_MIN))
+        return 0;
+    return res;
+}
+
+python:
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        res = 0
+        flag = -1 if x<0 else 1
+        x = abs(x)
+        while x:
+            res = res*10 + x%10
+            x //= 10
+        res = flag*res
+        return res if res < 2147483648 and res >= -2147483648 else 0
