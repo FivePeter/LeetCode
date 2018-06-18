@@ -1,0 +1,22 @@
+C语言：
+int romanToInt(char* s) {
+    char*temp=s;
+    int hash[26]={0};
+    hash['I'-'A'] = 1;
+    hash['V'-'A'] = 5;
+    hash['X'-'A'] = 10;
+    hash['L'-'A'] = 50;
+    hash['C'-'A'] = 100;
+    hash['D'-'A'] = 500;
+    hash['M'-'A'] = 1000;
+    int result=0;
+    while(*s !='\0'){
+        result = result + hash[*s-'A'];
+        if(hash[*temp-'A']<hash[*s-'A']){
+            result = result - 2*hash[*temp-'A'];
+        }
+        temp=s;
+        s++;
+    }
+    return result;
+}
