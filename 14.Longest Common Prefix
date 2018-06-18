@@ -1,0 +1,13 @@
+C语言：
+char* longestCommonPrefix(char** strs, int strsSize) {
+    if(strsSize==0)
+        return "";
+    char* res=strs[0];
+    for(int i=1;i<strsSize;i++){
+        int j=0;
+        while(res[j]!='\0' && strs[i][j]!='\0' && res[j]==strs[i][j])
+            j++;
+        res[j]='\0';
+    }
+    return res;
+}
