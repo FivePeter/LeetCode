@@ -1,0 +1,54 @@
+C语言：
+/**
+ * Return an array of arrays of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+void quicksort(int* nums,int frist,int last){
+    if(frist>=last) return;
+    int tmp=nums[frist];
+    int l=frist,r=last;
+    while(l<r)
+    {
+        while(l<r && nums[r]>=tmp)r--;
+        if(l<r) nums[l]=nums[r];
+        while(l<r && nums[l]<=tmp)l++;
+        if(l<r) nums[r]=nums[l];
+    }
+    nums[l]=tmp;
+    quicksort(nums,frist,l-1);
+    quicksort(nums,l+1,last);
+}
+
+int** threeSum(int* nums, int numsSize, int* returnSize) {
+    int** res = malloc(sizeof(int)*(numsSize*(numsSize-1)*(numsSize-2)/6));
+    int l,r;
+    int sum;
+    int top = 0;
+    if(numsSize<3){
+        *returnSize = 0;
+        return res;
+    }
+    quicksort(nums,0,numsSize-1);
+    for(int i=0;i<numsSize;i++){
+        if(nums[i]>0) break;
+        if(i>0 && nums[i] == nums[i-1]) continue; //Avoid repeated results
+        l = i+1;
+        r = numsSize-1;
+        while(l<r){
+            sum = nums[i]+nums[l]+nums[r];
+            if(sum==0){
+                res[top] = malloc(sizeof(int)*3);
+                res[top][0] = nums[i];
+                res[top][1] = nums[l];
+                res[top][2] = nums[r];
+                top++;l++;r--;
+                while(l<r && nums[l]==nums[l-1])l++;
+                while(l<r && nums[r]==nums[r+1])r--;
+            }
+            else if(sum>0) r--;
+            else l++;
+        }
+    }
+    *returnSize = top;
+    return res;
+}
