@@ -1,0 +1,30 @@
+C语言：解法一：变量每个字符，以其为回文子串中心进行判断（需要判断奇数或者偶数两种情况）  O（n^2）
+char* findlongestPalindrome(char* s,int low,int high,int ssize,int* maxlen,char* res){
+    while(low>=0 && high<ssize){
+        if(s[low] == s[high]){
+            *maxlen = *maxlen > (high-low+1) ? *maxlen : (high-low+1);
+            res = *maxlen > (high-low+1) ? res : &s[low];
+            low--;
+            high++;
+        }
+        else
+            break;
+    }
+    return res;
+}
+
+char* longestPalindrome(char* s) {
+    int len = strlen(s);
+    if(len<=1) return s;
+    int low,high;
+    char* res;
+    int maxlen = 0;
+    for(int i=0;i<len-1;i++){
+        res = findlongestPalindrome(s,i,i,len,&maxlen,res);
+        res = findlongestPalindrome(s,i,i+1,len,&maxlen,res);
+    }
+    res[maxlen] = '\0';
+    return res;
+}
+
+C语言解法二：Manacher算法 O（n）
