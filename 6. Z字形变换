@@ -1,0 +1,29 @@
+C语言：
+char* convert(char* s, int numRows) {
+    char* res;
+    int len = strlen(s);
+    int index = 0;
+    int dis = 2*(numRows-1);
+    if(numRows==0 || numRows==1 || len==0)
+        return s;
+    res = malloc(sizeof(char)*len);
+    for(int i=0;i<numRows;i++){
+        for(int j=i;j<len;j++){
+            if(i==0) 
+            {
+                if((j%dis)==0) 
+                    res[index++] = s[j];
+            }
+            else if(i==numRows-1){
+                if((j%dis)==(numRows-1)) 
+                    res[index++] = s[j];
+            }  
+            else
+            {
+                if((j+i)%dis==0 || (j-i)%dis==0 )
+                    res[index++] = s[j];
+            }
+        }
+    }
+    return res;
+}
