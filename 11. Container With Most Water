@@ -1,0 +1,15 @@
+C 语言：
+int maxArea(int* height, int heightSize) {
+    int left=0,right= heightSize-1;
+    int res =0;
+    for(int i=0;i<heightSize;i++){
+        int tmp_high = height[left] > height[right] ? height[right] : height[left];
+        int tmp_area = tmp_high*(right - left);
+        res = res>tmp_area ? res : tmp_area;
+        if(height[left] > height[right])
+            right--;
+        else
+            left++;
+    }
+    return res;
+}
